@@ -1,0 +1,82 @@
+{%- assign product = section.settings.product -%}
+<div class="luxora-story">
+  <div class="luxora-story__image-wrap">
+    {%- if product.featured_image != blank -%}
+      <img src="{{ product.featured_image | image_url: width: 1000 }}"
+           alt="{{ product.title | escape }}"
+           loading="lazy"
+           width="{{ product.featured_image.width }}"
+           height="{{ product.featured_image.height }}">
+    {%- elsif section.settings.image != blank -%}
+      <img src="{{ section.settings.image | image_url: width: 1000 }}"
+           alt="Placeholder"
+           loading="lazy"
+           width="{{ section.settings.image.width }}"
+           height="{{ section.settings.image.height }}">
+    {%- else -%}
+      {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+    {%- endif -%}
+  </div>
+  
+  <div class="luxora-story__content">
+    {%- if section.settings.heading != blank -%}
+      <p style="text-transform: uppercase; letter-spacing: 2px; color: var(--luxora-accent); margin-bottom: 0.5rem; font-size: 0.9rem;">{{ section.settings.heading | escape }}</p>
+    {%- endif -%}
+
+    <h2 style="font-size: 3rem; margin-bottom: 1rem;">
+      {%- if product != blank -%}{{ product.title | escape }}{%- else -%}Example Product{%- endif -%}
+    </h2>
+    
+    <div style="font-size: 1.5rem; color: var(--luxora-accent); margin-bottom: 1.5rem;">
+      {%- if product != blank -%}{{ product.price | money }}{%- else -%}$99.00{%- endif -%}
+    </div>
+    
+    <div style="font-size: 1.1rem; line-height: 1.6; margin-bottom: 2.5rem; color: #555;">
+      {%- if product != blank -%}
+        {{ product.description | strip_html | truncatewords: 30 }}
+      {%- else -%}
+        This is an example product description highlighting the luxurious features and premium quality of the item.
+      {%- endif -%}
+    </div>
+    
+    {%- if product != blank -%}
+      <form method="post" action="{{ routes.cart_add_url }}" class="luxora-product-highlight__form">
+        <input type="hidden" name="id" value="{{ product.variants.first.id }}">
+        <button type="submit" class="button" style="width: 100%; padding: 1rem;">Add to Cart</button>
+      </form>
+    {%- else -%}
+      <button class="button" style="width: 100%; padding: 1rem;">Add to Cart</button>
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Luxora Product Highlight",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Small Heading",
+      "default": "Product Spotlight"
+    },
+    {
+      "type": "product",
+      "id": "product",
+      "label": "Product"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Fallback Image (if no product selected)"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Luxora Product Highlight"
+    }
+  ]
+}
+{% endschema %}

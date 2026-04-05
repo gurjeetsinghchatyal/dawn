@@ -1,0 +1,101 @@
+{%- style -%}
+  {%- if section.settings.overlay_opacity > 0 -%}
+    .luxora-hero-{{ section.id }} .luxora-hero__overlay {
+      background: linear-gradient(
+        to bottom,
+        rgba(0,0,0, {{ section.settings.overlay_opacity | times: 0.01 | minus: 0.2 | at_least: 0 }}),
+        rgba(0,0,0, {{ section.settings.overlay_opacity | times: 0.01 }})
+      );
+    }
+  {%- endif -%}
+{%- endstyle -%}
+
+<div class="luxora-hero luxora-hero-{{ section.id }}">
+  <div class="luxora-hero__media">
+    {%- if section.settings.video != blank -%}
+      {{ section.settings.video | video_tag: autoplay: true, loop: true, muted: true, controls: false }}
+    {%- elsif section.settings.image != blank -%}
+      <img src="{{ section.settings.image | image_url: width: 2000 }}" 
+           alt="{{ section.settings.image.alt | escape }}"
+           loading="eager"
+           width="{{ section.settings.image.width }}"
+           height="{{ section.settings.image.height }}">
+    {%- else -%}
+      {{ 'lifestyle-2' | placeholder_svg_tag: 'placeholder-svg' }}
+    {%- endif -%}
+  </div>
+
+  <div class="luxora-hero__overlay"></div>
+
+  <div class="luxora-hero__content">
+    {%- if section.settings.heading != blank -%}
+      <h2 class="luxora-hero__heading">{{ section.settings.heading | escape }}</h2>
+    {%- endif -%}
+    
+    {%- if section.settings.subtext != blank -%}
+      <p class="luxora-hero__subtext">{{ section.settings.subtext | escape }}</p>
+    {%- endif -%}
+    
+    {%- if section.settings.button_label != blank and section.settings.button_link != blank -%}
+      <a href="{{ section.settings.button_link }}" class="button">{{ section.settings.button_label | escape }}</a>
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Luxora Hero",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Hero Image"
+    },
+    {
+      "type": "video",
+      "id": "video",
+      "label": "Hero Video (Overrides image)"
+    },
+    {
+      "type": "range",
+      "id": "overlay_opacity",
+      "min": 0,
+      "max": 100,
+      "step": 10,
+      "unit": "%",
+      "label": "Overlay Opacity",
+      "default": 30
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Elevate Your Style"
+    },
+    {
+      "type": "text",
+      "id": "subtext",
+      "label": "Subtext",
+      "default": "Discover our new luxury collection."
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button Label",
+      "default": "Shop Now"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button Link"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Luxora Hero"
+    }
+  ]
+}
+{% endschema %}

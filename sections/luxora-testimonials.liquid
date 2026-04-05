@@ -1,0 +1,76 @@
+<div class="luxora-testimonials">
+  {%- if section.settings.heading != blank -%}
+    <h2 style="font-size: 2.5rem; margin-bottom: 3rem;">{{ section.settings.heading | escape }}</h2>
+  {%- endif -%}
+  
+  <div class="luxora-testimonials__grid">
+    {%- for block in section.blocks -%}
+      <div class="luxora-testimonial" {{ block.shopify_attributes }}>
+        <div class="luxora-stars">
+          {%- for i in (1..block.settings.stars) -%}★{%- endfor -%}
+        </div>
+        <div style="font-size: 1.1rem; font-style: italic; margin-bottom: 1.5rem;">
+          "{{ block.settings.text | escape }}"
+        </div>
+        <div style="font-family: var(--luxora-heading-font); font-weight: 600;">
+          {{ block.settings.author | escape }}
+        </div>
+      </div>
+    {%- endfor -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Luxora Testimonials",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "What Our Clients Say"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "testimonial",
+      "name": "Testimonial",
+      "settings": [
+        {
+          "type": "range",
+          "id": "stars",
+          "min": 1,
+          "max": 5,
+          "step": 1,
+          "label": "Star Rating",
+          "default": 5
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Testimonial Text",
+          "default": "Absolutely stunning quality and packaging. I'm in love with my purchase!"
+        },
+        {
+          "type": "text",
+          "id": "author",
+          "label": "Author",
+          "default": "Jane Doe"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Luxora Testimonials",
+      "blocks": [
+        { "type": "testimonial" },
+        { "type": "testimonial" },
+        { "type": "testimonial" }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,94 @@
+<div class="luxora-faq">
+  {%- if section.settings.heading != blank -%}
+    <h2 style="text-align: center; font-size: 2.5rem; margin-bottom: 3rem;">{{ section.settings.heading | escape }}</h2>
+  {%- endif -%}
+
+  <div class="luxora-faq__list">
+    {%- for block in section.blocks -%}
+      <div class="luxora-accordion" {{ block.shopify_attributes }}>
+        <button class="luxora-accordion__btn" aria-expanded="false">
+          {{ block.settings.question | escape }}
+          <span class="luxora-accordion__icon">+</span>
+        </button>
+        <div class="luxora-accordion__content">
+          <div style="padding-top: 0.5rem; color: #555; line-height: 1.6;">
+            {{ block.settings.answer }}
+          </div>
+        </div>
+      </div>
+    {%- endfor -%}
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const accordions = document.querySelectorAll('.luxora-accordion');
+    
+    accordions.forEach(acc => {
+      const btn = acc.querySelector('.luxora-accordion__btn');
+      btn.addEventListener('click', () => {
+        const isOpen = acc.classList.contains('is-open');
+        
+        // Close all
+        accordions.forEach(a => {
+          a.classList.remove('is-open');
+          a.querySelector('.luxora-accordion__btn').setAttribute('aria-expanded', 'false');
+          a.querySelector('.luxora-accordion__icon').textContent = '+';
+        });
+        
+        // Open clicked if it wasn't open
+        if (!isOpen) {
+          acc.classList.add('is-open');
+          btn.setAttribute('aria-expanded', 'true');
+          acc.querySelector('.luxora-accordion__icon').textContent = '-';
+        }
+      });
+    });
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Luxora FAQ",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Frequently Asked Questions"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "faq_item",
+      "name": "FAQ Item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "question",
+          "label": "Question",
+          "default": "What is your return policy?"
+        },
+        {
+          "type": "richtext",
+          "id": "answer",
+          "label": "Answer",
+          "default": "<p>We offer a 30-day return policy for all unworn and unaltered items.</p>"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Luxora FAQ",
+      "blocks": [
+        { "type": "faq_item" },
+        { "type": "faq_item" },
+        { "type": "faq_item" }
+      ]
+    }
+  ]
+}
+{% endschema %}

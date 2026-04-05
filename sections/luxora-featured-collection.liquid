@@ -1,0 +1,101 @@
+<div class="luxora-collection">
+  <div class="luxora-section-header">
+    {%- if section.settings.heading != blank -%}
+      <h2>{{ section.settings.heading | escape }}</h2>
+    {%- endif -%}
+    {%- if section.settings.subtext != blank -%}
+      <p>{{ section.settings.subtext | escape }}</p>
+    {%- endif -%}
+  </div>
+
+  <div class="luxora-grid">
+    {%- assign collection = section.settings.collection -%}
+    {%- if collection != blank -%}
+      {%- for product in collection.products limit: section.settings.products_to_show -%}
+        <div class="luxora-product-card">
+          <a href="{{ product.url }}" class="luxora-product-card__link">
+            <div class="luxora-product-card__image">
+              <img src="{{ product.featured_image | image_url: width: 500 }}" 
+                   alt="{{ product.featured_image.alt | escape }}"
+                   loading="lazy"
+                   width="500"
+                   height="{{ 500 | divided_by: product.featured_image.aspect_ratio | default: 500 | ceil }}"
+                   style="height: auto; width: 100%;">
+            </div>
+            <div class="luxora-product-card__info" style="text-align: center; margin-top: 1rem;">
+              <h3 style="font-size: 1.25rem; font-family: var(--luxora-body-font) !important;">{{ product.title | escape }}</h3>
+              <div class="luxora-product-card__price" style="color: var(--luxora-accent); margin-top: 0.5rem;">
+                {{ product.price | money }}
+              </div>
+            </div>
+          </a>
+        </div>
+      {%- endfor -%}
+    {%- else -%}
+      {%- for i in (1..section.settings.products_to_show) -%}
+        <div class="luxora-product-card">
+          <div class="luxora-product-card__image">
+            {{ 'product-' | append: i | placeholder_svg_tag: 'placeholder-svg' }}
+          </div>
+          <div class="luxora-product-card__info" style="text-align: center; margin-top: 1rem;">
+            <h3>Example Product</h3>
+            <div class="luxora-product-card__price" style="color: var(--luxora-accent); margin-top: 0.5rem;">$99.00</div>
+          </div>
+        </div>
+      {%- endfor -%}
+    {%- endif -%}
+  </div>
+  
+  {%- if section.settings.show_view_all and collection != blank -%}
+    <div style="text-align: center; margin-top: 3rem;">
+      <a href="{{ collection.url }}" class="button button--secondary">View All</a>
+    </div>
+  {%- endif -%}
+</div>
+
+{% schema %}
+{
+  "name": "Luxora Collection",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Featured Collection"
+    },
+    {
+      "type": "text",
+      "id": "subtext",
+      "label": "Subtext",
+      "default": "Handpicked items just for you"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection"
+    },
+    {
+      "type": "range",
+      "id": "products_to_show",
+      "min": 2,
+      "max": 12,
+      "step": 1,
+      "label": "Products to show",
+      "default": 4
+    },
+    {
+      "type": "checkbox",
+      "id": "show_view_all",
+      "label": "Show 'View All' button",
+      "default": true
+    }
+  ],
+  "presets": [
+    {
+      "name": "Luxora Collection"
+    }
+  ]
+}
+{% endschema %}

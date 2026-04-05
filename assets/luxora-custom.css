@@ -1,0 +1,253 @@
+/* Luxora Theme Custom Styles */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap');
+
+:root {
+  --luxora-bg: #FAF9F6;
+  --luxora-text: #111111;
+  --luxora-accent: #C9A96E;
+  --luxora-accent-hover: #b3935b;
+  --luxora-heading-font: 'Playfair Display', serif;
+  --luxora-body-font: 'Inter', sans-serif;
+  --luxora-radius: 6px;
+}
+
+/* Global Overrides */
+body {
+  background-color: var(--luxora-bg);
+  color: var(--luxora-text);
+  font-family: var(--luxora-body-font) !important;
+}
+
+h1, h2, h3, h4, h5, h6, 
+.h1, .h2, .h3, .h4, .h5, .h6,
+.hxl {
+  font-family: var(--luxora-heading-font) !important;
+}
+
+.button, .btn, .shopify-payment-button__button {
+  background-color: var(--luxora-accent) !important;
+  color: #fff !important;
+  border-radius: var(--luxora-radius) !important;
+  font-family: var(--luxora-body-font);
+  border: none !important;
+  transition: background-color 0.3s ease;
+}
+.button::before, .button::after {
+  display: none !important;
+}
+
+.button:hover, .btn:hover, .shopify-payment-button__button:hover {
+  background-color: var(--luxora-accent-hover) !important;
+}
+
+.button--secondary {
+  background-color: transparent !important;
+  color: var(--luxora-accent) !important;
+  border: 1px solid var(--luxora-accent) !important;
+}
+.button--secondary:hover {
+  background-color: var(--luxora-accent) !important;
+  color: #fff !important;
+}
+
+/* Luxora Hero */
+.luxora-hero {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 80vh;
+  overflow: hidden;
+  text-align: center;
+}
+.luxora-hero__media {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+.luxora-hero__media img,
+.luxora-hero__media video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.luxora-hero__overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+.luxora-hero__content {
+  position: relative;
+  z-index: 2;
+  padding: 2rem;
+  max-width: 800px;
+}
+.luxora-hero__heading {
+  color: #fff;
+  font-size: 4rem;
+  margin-bottom: 1rem;
+}
+.luxora-hero__subtext {
+  color: #fff;
+  font-size: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+/* Luxora Featured Collection */
+.luxora-collection {
+  padding: 5rem 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+.luxora-section-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+.luxora-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+}
+
+/* Luxora Brand Story */
+.luxora-story {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  padding: 5rem 0;
+}
+.luxora-story.layout--right .luxora-story__image-wrap {
+  order: 2;
+}
+.luxora-story.layout--right .luxora-story__content {
+  order: 1;
+}
+.luxora-story__image-wrap,
+.luxora-story__content {
+  flex: 1 1 50%;
+  min-width: 300px;
+}
+.luxora-story__image-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.luxora-story__content {
+  padding: 4rem;
+}
+
+/* Luxora Testimonials */
+.luxora-testimonials {
+  padding: 5rem 2rem;
+  background-color: #fff;
+  text-align: center;
+}
+.luxora-testimonials__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.luxora-testimonial {
+  padding: 2rem;
+  background: var(--luxora-bg);
+  border-radius: var(--luxora-radius);
+}
+.luxora-stars {
+  color: var(--luxora-accent);
+  margin-bottom: 1rem;
+}
+
+/* Luxora FAQ */
+.luxora-faq {
+  padding: 5rem 2rem;
+  max-width: 800px;
+  margin: 0 auto;
+}
+.luxora-accordion {
+  border-bottom: 1px solid #ddd;
+}
+.luxora-accordion__btn {
+  width: 100%;
+  text-align: left;
+  background: none;
+  border: none;
+  padding: 1.5rem 0;
+  font-family: var(--luxora-heading-font);
+  font-size: 1.25rem;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.luxora-accordion__content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+}
+.luxora-accordion.is-open .luxora-accordion__content {
+  max-height: 500px;
+  padding-bottom: 1.5rem;
+}
+
+/* Sticky ATC */
+.luxora-sticky-atc {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: #fff;
+  box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+  padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 1000;
+  transform: translateY(100%);
+  transition: transform 0.3s ease;
+}
+.luxora-sticky-atc.is-visible {
+  transform: translateY(0);
+}
+.luxora-sticky-atc__info {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.luxora-sticky-atc__info img {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 4px;
+}
+.luxora-sticky-atc__title {
+  font-weight: 600;
+  font-family: var(--luxora-heading-font);
+}
+.luxora-sticky-atc__price {
+  color: var(--luxora-accent);
+}
+@media screen and (max-width: 749px) {
+  .luxora-sticky-atc__info {
+    display: none;
+  }
+  .luxora-sticky-atc {
+    justify-content: center;
+  }
+  .luxora-story__content {
+    padding: 2rem;
+  }
+  .luxora-hero__heading {
+    font-size: 2.5rem;
+  }
+  .luxora-hero__subtext {
+    font-size: 1.2rem;
+  }
+}
